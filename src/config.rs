@@ -78,7 +78,7 @@ impl Config {
                 return Validation::WrongImageFormat;
             }
 
-            if !(check_file(self.org_image_path.as_ref()) && check_file(self.save_path.as_ref())) {
+            if !check_file(self.org_image_path.as_ref()) {
                 return Validation::FileDoesntExist;
             }
 
@@ -90,7 +90,6 @@ impl Config {
         }
 
         if !(check_file(self.org_image_path.as_ref())
-            && check_file(self.save_path.as_ref())
             && check_file(self.file_to_hide_path.as_ref()))
         {
             return Validation::FileDoesntExist;
