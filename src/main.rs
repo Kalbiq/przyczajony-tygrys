@@ -9,9 +9,12 @@ use std::{
 
 use crate::helper::print_help;
 
-mod config;
-mod encoder;
-mod helper;
+pub mod config;
+pub mod encoder;
+pub mod helper;
+
+#[cfg(test)]
+mod tests;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -25,6 +28,18 @@ fn main() {
         }
     };
 
+    run(config);
+
+    std::process::exit(0);
+}
+
+fn load_image(path: &String) -> DynamicImage {
+    let image = ImageReader::open(path).unwrap().decode().unwrap();
+
+    image
+}
+
+fn run(config: Config) {
     if config.help {
         print_help();
         std::process::exit(0);
@@ -65,12 +80,4 @@ fn main() {
 
         img.save(&config.save_path.unwrap()).unwrap();
     }
-
-    std::process::exit(0);
-}
-
-fn load_image(path: &String) -> DynamicImage {
-    let image = ImageReader::open(path).unwrap().decode().unwrap();
-
-    image
 }

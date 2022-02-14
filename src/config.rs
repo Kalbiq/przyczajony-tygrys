@@ -89,6 +89,12 @@ impl Config {
             return Validation::MissingFilePath;
         }
 
+        if !check_file_extension(self.org_image_path.as_ref())
+            || !check_file_extension(self.save_path.as_ref())
+        {
+            return Validation::WrongImageFormat;
+        }
+
         if !(check_file(self.org_image_path.as_ref())
             && check_file(self.file_to_hide_path.as_ref()))
         {
